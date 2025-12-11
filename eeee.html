@@ -1,0 +1,2210 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FOOD CLICKER ULTRA | Неоморфизм + Глассморфизм</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Rubik:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Цветовая палитра */
+            --primary: #FF6B6B;
+            --primary-dark: #FF4757;
+            --secondary: #4ECDC4;
+            --secondary-dark: #3DAFA8;
+            --accent: #FFD166;
+            --accent-dark: #FFC145;
+            --dark: #2D3047;
+            --darker: #1A1C2E;
+            --light: #F7F9FC;
+            --lighter: #FFFFFF;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            --neumorphic-light: #e0e5ec;
+            --neumorphic-dark: #a3b1c6;
+            --success: #06D6A0;
+            --warning: #FFD166;
+            --danger: #EF476F;
+            --info: #118AB2;
+            --legendary: #FF9E00;
+            --epic: #C770FF;
+            --rare: #4ECDC4;
+            --common: #95A5A6;
+            
+            /* Тема по умолчанию */
+            --bg-color: #F0F5FF;
+            --card-bg: rgba(255, 255, 255, 0.7);
+            --text-color: #2D3047;
+            --text-secondary: #5A5D7A;
+            --border-radius: 20px;
+            --transition: all 0.3s ease;
+            
+            /* Размеры */
+            --header-height: 80px;
+            --nav-height: 70px;
+        }
+        
+        /* Темы оформления */
+        .theme-dark-kitchen {
+            --bg-color: #1A1C2E;
+            --card-bg: rgba(45, 48, 71, 0.7);
+            --text-color: #F7F9FC;
+            --text-secondary: #A5A8C5;
+        }
+        
+        .theme-milk-white {
+            --bg-color: #F8F9FA;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --text-color: #2D3047;
+            --text-secondary: #6C757D;
+        }
+        
+        .theme-cheese-gold {
+            --bg-color: #FFF9E6;
+            --card-bg: rgba(255, 249, 230, 0.8);
+            --text-color: #5C4B00;
+            --text-secondary: #8A7A3A;
+        }
+        
+        .theme-neon-night {
+            --bg-color: #0A0E2A;
+            --card-bg: rgba(16, 20, 50, 0.8);
+            --text-color: #FFFFFF;
+            --text-secondary: #A0A8FF;
+        }
+        
+        .theme-candy-pink {
+            --bg-color: #FFEAF2;
+            --card-bg: rgba(255, 234, 242, 0.8);
+            --text-color: #8A2C6E;
+            --text-secondary: #C94F9E;
+        }
+        
+        .theme-lava-grill {
+            --bg-color: #301010;
+            --card-bg: rgba(70, 20, 20, 0.8);
+            --text-color: #FFD0A0;
+            --text-secondary: #FFA07A;
+        }
+        
+        .theme-frosted-ice {
+            --bg-color: #E6F7FF;
+            --card-bg: rgba(230, 247, 255, 0.8);
+            --text-color: #00668C;
+            --text-secondary: #4ECDC4;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            font-family: 'Rubik', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            min-height: 100vh;
+            transition: var(--transition);
+        }
+        
+        h1, h2, h3, h4, h5 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+        }
+        
+        /* Стили для скроллбара */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--glass-bg);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+        }
+        
+        /* Общие стили */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Стеклянный эффект */
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+        }
+        
+        /* Неоморфный эффект */
+        .neumorphic {
+            border-radius: var(--border-radius);
+            background: var(--neumorphic-light);
+            box-shadow: 8px 8px 16px var(--neumorphic-dark),
+                       -8px -8px 16px var(--lighter);
+        }
+        
+        /* Кнопки */
+        .btn {
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            transition: var(--transition);
+            font-family: 'Montserrat', sans-serif;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
+            color: white;
+            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+        }
+        
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
+        }
+        
+        .btn-accent {
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            color: var(--darker);
+            box-shadow: 0 4px 15px rgba(255, 209, 102, 0.3);
+        }
+        
+        .btn-accent:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 209, 102, 0.4);
+        }
+        
+        /* Шапка */
+        .header {
+            height: var(--header-height);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-color);
+        }
+        
+        .logo-icon {
+            color: var(--primary);
+            font-size: 28px;
+        }
+        
+        .currency-display {
+            display: flex;
+            gap: 15px;
+            margin-left: auto;
+        }
+        
+        .currency {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 12px;
+            background: var(--card-bg);
+            font-weight: 600;
+        }
+        
+        .currency i {
+            color: var(--accent);
+        }
+        
+        .currency.gems i {
+            color: var(--secondary);
+        }
+        
+        /* Навигация */
+        .nav {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 500px;
+            height: var(--nav-height);
+            display: flex;
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            overflow: hidden;
+        }
+        
+        .nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+        
+        .nav-item.active {
+            color: var(--primary);
+            background: rgba(255, 107, 107, 0.1);
+        }
+        
+        .nav-item i {
+            font-size: 20px;
+        }
+        
+        /* Основной контент */
+        .main-content {
+            padding: 20px;
+            padding-bottom: 100px;
+            min-height: calc(100vh - var(--header-height));
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Вкладка GAME */
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+        
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 800px;
+        }
+        
+        .stat-card {
+            flex: 1;
+            padding: 15px;
+            margin: 0 10px;
+            text-align: center;
+            border-radius: var(--border-radius);
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+        }
+        
+        .stat-card h3 {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+        
+        .stat-card .value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-color);
+        }
+        
+        .xp-bar-container {
+            width: 100%;
+            max-width: 800px;
+        }
+        
+        .xp-bar {
+            height: 20px;
+            background: var(--glass-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 8px;
+        }
+        
+        .xp-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+        
+        .xp-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .food-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        
+        .food {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #FF9A9E, #FAD0C4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            user-select: none;
+            transition: transform 0.1s ease;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1),
+                       inset 0 -10px 20px rgba(0, 0, 0, 0.05),
+                       inset 0 10px 20px rgba(255, 255, 255, 0.5);
+            overflow: hidden;
+        }
+        
+        .food:active {
+            transform: scale(0.95);
+        }
+        
+        .food-inner {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #FF9A9E, #FAD0C4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .food-icon {
+            font-size: 100px;
+            color: #FF6B6B;
+            z-index: 2;
+        }
+        
+        /* Эффекты для еды */
+        .food-aura {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            z-index: 0;
+            opacity: 0.7;
+        }
+        
+        /* Частицы */
+        .particles-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+        
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10;
+        }
+        
+        /* Уведомления */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: var(--border-radius);
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateX(120%);
+            transition: transform 0.3s ease;
+            max-width: 300px;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        /* Вкладка SHOP */
+        .shop-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .shop-categories {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 10px 0;
+        }
+        
+        .category-btn {
+            padding: 10px 20px;
+            border-radius: 12px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-secondary);
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: var(--transition);
+        }
+        
+        .category-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .upgrades-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .upgrade-card {
+            padding: 20px;
+            border-radius: var(--border-radius);
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+        
+        .upgrade-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+        
+        .upgrade-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .upgrade-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+        }
+        
+        .upgrade-title {
+            font-size: 18px;
+            font-weight: 700;
+        }
+        
+        .upgrade-description {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .upgrade-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .upgrade-price {
+            font-weight: 700;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .upgrade-level {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        
+        /* Вкладка COSMETICS */
+        .cosmetics-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .cosmetics-categories {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .cosmetics-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .cosmetics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .cosmetic-card {
+            padding: 15px;
+            border-radius: var(--border-radius);
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transition: var(--transition);
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        
+        .cosmetic-card:hover {
+            transform: translateY(-3px);
+        }
+        
+        .cosmetic-card.equipped {
+            border-color: var(--success);
+        }
+        
+        .cosmetic-card.owned:not(.equipped) {
+            border-color: var(--secondary);
+        }
+        
+        .cosmetic-card.locked {
+            opacity: 0.7;
+            filter: grayscale(0.5);
+        }
+        
+        .cosmetic-image {
+            width: 100%;
+            height: 120px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: white;
+        }
+        
+        .cosmetic-rarity {
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-weight: 700;
+            text-transform: uppercase;
+            width: fit-content;
+        }
+        
+        .rarity-common {
+            background: var(--common);
+            color: white;
+        }
+        
+        .rarity-rare {
+            background: var(--rare);
+            color: white;
+        }
+        
+        .rarity-epic {
+            background: var(--epic);
+            color: white;
+        }
+        
+        .rarity-legendary {
+            background: var(--legendary);
+            color: white;
+        }
+        
+        .cosmetic-name {
+            font-weight: 600;
+            font-size: 16px;
+        }
+        
+        .cosmetic-price {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        
+        /* Вкладка PROFILE */
+        .profile-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+        }
+        
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: white;
+            position: relative;
+            border: 3px solid var(--accent);
+        }
+        
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex: 1;
+        }
+        
+        .profile-name {
+            font-size: 24px;
+            font-weight: 800;
+        }
+        
+        .profile-level {
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+        
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .achievement-card {
+            padding: 15px;
+            border-radius: var(--border-radius);
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .achievement-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--darker);
+        }
+        
+        .achievement-info {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            flex: 1;
+        }
+        
+        .achievement-name {
+            font-weight: 700;
+        }
+        
+        .achievement-desc {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        
+        .lottery-section {
+            padding: 20px;
+            border-radius: var(--border-radius);
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .lottery-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .lottery-tickets {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        
+        .lottery-prizes {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        
+        .prize-card {
+            padding: 15px;
+            border-radius: 12px;
+            background: var(--glass-bg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            text-align: center;
+        }
+        
+        .prize-icon {
+            font-size: 30px;
+            color: var(--primary);
+        }
+        
+        .promo-section {
+            padding: 20px;
+            border-radius: var(--border-radius);
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .promo-input-container {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .promo-input {
+            flex: 1;
+            padding: 12px 20px;
+            border-radius: 12px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-color);
+            font-family: 'Rubik', sans-serif;
+            font-size: 16px;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .stats-bar {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .stat-card {
+                margin: 0;
+            }
+            
+            .upgrades-grid,
+            .cosmetics-grid,
+            .achievements-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .food-container {
+                width: 250px;
+                height: 250px;
+            }
+            
+            .food {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .food-inner {
+                width: 160px;
+                height: 160px;
+            }
+            
+            .food-icon {
+                font-size: 80px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .currency-display {
+                display: none;
+            }
+            
+            .nav {
+                width: 95%;
+            }
+            
+            .upgrades-grid,
+            .cosmetics-grid,
+            .achievements-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Анимации */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 107, 107, 0.5); }
+            50% { box-shadow: 0 0 40px rgba(255, 107, 107, 0.8); }
+        }
+        
+        .pulse {
+            animation: pulse 1s infinite;
+        }
+        
+        .float {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .glow {
+            animation: glow 2s ease-in-out infinite;
+        }
+        
+        /* Утилиты */
+        .hidden {
+            display: none !important;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .mb-10 {
+            margin-bottom: 10px;
+        }
+        
+        .mb-20 {
+            margin-bottom: 20px;
+        }
+        
+        .mt-10 {
+            margin-top: 10px;
+        }
+        
+        .mt-20 {
+            margin-top: 20px;
+        }
+        
+        .full-width {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка -->
+    <header class="header glass">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-hamburger logo-icon"></i>
+                <span>FOOD CLICKER ULTRA</span>
+            </div>
+            <div class="currency-display">
+                <div class="currency">
+                    <i class="fas fa-coins"></i>
+                    <span id="foodCoins">1,000</span>
+                </div>
+                <div class="currency gems">
+                    <i class="fas fa-gem"></i>
+                    <span id="gems">50</span>
+                </div>
+                <div class="currency">
+                    <i class="fas fa-ticket-alt"></i>
+                    <span id="tickets">5</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Основной контент -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Вкладка GAME -->
+            <div id="game-tab" class="tab-content active">
+                <div class="game-container">
+                    <div class="stats-bar">
+                        <div class="stat-card glass">
+                            <h3>Уровень</h3>
+                            <div class="value" id="level">1</div>
+                        </div>
+                        <div class="stat-card glass">
+                            <h3>XP</h3>
+                            <div class="value" id="xp">0</div>
+                        </div>
+                        <div class="stat-card glass">
+                            <h3>Кликов</h3>
+                            <div class="value" id="clicks">0</div>
+                        </div>
+                        <div class="stat-card glass">
+                            <h3>Множитель</h3>
+                            <div class="value" id="multiplier">x1</div>
+                        </div>
+                    </div>
+                    
+                    <div class="xp-bar-container">
+                        <div class="xp-bar">
+                            <div class="xp-fill" id="xpFill"></div>
+                        </div>
+                        <div class="xp-info">
+                            <span id="currentXp">0</span>
+                            <span id="xpNeeded">50</span>
+                        </div>
+                    </div>
+                    
+                    <div class="food-container">
+                        <div class="food-aura" id="foodAura"></div>
+                        <div class="food neumorphic" id="mainFood">
+                            <div class="food-inner">
+                                <i class="fas fa-hamburger food-icon" id="foodIcon"></i>
+                            </div>
+                        </div>
+                        <div class="particles-container" id="particlesContainer"></div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <h2 class="mb-10">Тапай на еду, чтобы зарабатывать!</h2>
+                        <p class="mb-20">Ищи редкие события: золотая еда, острый перец, комбо-обед и другие!</p>
+                        <div class="boost-indicator glass" id="boostIndicator" style="padding: 10px 20px; display: none;">
+                            <i class="fas fa-fire"></i> <span id="boostText">Буст активен</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Вкладка SHOP -->
+            <div id="shop-tab" class="tab-content">
+                <div class="shop-container">
+                    <h2 class="mb-20">Магазин улучшений</h2>
+                    
+                    <div class="shop-categories">
+                        <button class="category-btn active" data-category="gameplay">Геймплей</button>
+                        <button class="category-btn" data-category="autoclicker">Автокликер</button>
+                        <button class="category-btn" data-category="multipliers">Множители</button>
+                        <button class="category-btn" data-category="special">Особые</button>
+                    </div>
+                    
+                    <div class="upgrades-grid" id="upgradesContainer">
+                        <!-- Улучшения будут добавляться динамически -->
+                    </div>
+                    
+                    <div class="promo-section">
+                        <h3>Промокоды</h3>
+                        <p>Введи промокод, чтобы получить бонусы!</p>
+                        <div class="promo-input-container">
+                            <input type="text" class="promo-input" id="promoInput" placeholder="Введите промокод">
+                            <button class="btn btn-primary" id="promoBtn">Активировать</button>
+                        </div>
+                        <div id="promoMessage" class="mt-10"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Вкладка COSMETICS -->
+            <div id="cosmetics-tab" class="tab-content">
+                <div class="cosmetics-container">
+                    <h2 class="mb-20">Косметика и оформление</h2>
+                    
+                    <div class="cosmetics-categories">
+                        <div class="cosmetics-section">
+                            <h3>Скины еды</h3>
+                            <div class="cosmetics-grid" id="foodSkinsContainer">
+                                <!-- Скины еды будут добавляться динамически -->
+                            </div>
+                        </div>
+                        
+                        <div class="cosmetics-section">
+                            <h3>Ауры и эффекты</h3>
+                            <div class="cosmetics-grid" id="aurasContainer">
+                                <!-- Ауры будут добавляться динамически -->
+                            </div>
+                        </div>
+                        
+                        <div class="cosmetics-section">
+                            <h3>Темы оформления</h3>
+                            <div class="cosmetics-grid" id="themesContainer">
+                                <!-- Темы будут добавляться динамически -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Вкладка PROFILE -->
+            <div id="profile-tab" class="tab-content">
+                <div class="profile-container">
+                    <div class="profile-header">
+                        <div class="profile-avatar">
+                            <i class="fas fa-user-chef"></i>
+                        </div>
+                        <div class="profile-info">
+                            <div class="profile-name">Food Master</div>
+                            <div class="profile-level">Уровень <span id="profileLevel">1</span></div>
+                            <div>Всего кликов: <span id="totalClicks">0</span></div>
+                            <div>Всего XP: <span id="totalXp">0</span></div>
+                        </div>
+                    </div>
+                    
+                    <div class="lottery-section">
+                        <div class="lottery-header">
+                            <h3>Розыгрыши</h3>
+                            <div class="lottery-tickets">
+                                <i class="fas fa-ticket-alt"></i>
+                                <span id="profileTickets">5</span> билетов
+                            </div>
+                        </div>
+                        <p>Используй билеты для участия в розыгрыше призов! Шанс выигрыша: <span id="winChance">0.5%</span></p>
+                        <button class="btn btn-accent full-width" id="lotteryBtn">Использовать 1 билет</button>
+                        
+                        <h4 class="mt-20">Возможные призы:</h4>
+                        <div class="lottery-prizes">
+                            <div class="prize-card">
+                                <i class="fas fa-gem prize-icon"></i>
+                                <div>1000 Gems</div>
+                            </div>
+                            <div class="prize-card">
+                                <i class="fas fa-crown prize-icon"></i>
+                                <div>Legendary Skin</div>
+                            </div>
+                            <div class="prize-card">
+                                <i class="fas fa-hamburger prize-icon"></i>
+                                <div>Эксклюзивная еда</div>
+                            </div>
+                            <div class="prize-card">
+                                <i class="fas fa-bolt prize-icon"></i>
+                                <div>Буст x10 на 1 час</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="mb-20">Достижения</h3>
+                        <div class="achievements-grid" id="achievementsContainer">
+                            <!-- Достижения будут добавляться динамически -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Навигация -->
+    <nav class="nav">
+        <div class="nav-item active" data-tab="game-tab">
+            <i class="fas fa-gamepad"></i>
+            <span>GAME</span>
+        </div>
+        <div class="nav-item" data-tab="shop-tab">
+            <i class="fas fa-shopping-cart"></i>
+            <span>SHOP</span>
+        </div>
+        <div class="nav-item" data-tab="cosmetics-tab">
+            <i class="fas fa-palette"></i>
+            <span>COSMETICS</span>
+        </div>
+        <div class="nav-item" data-tab="profile-tab">
+            <i class="fas fa-user"></i>
+            <span>PROFILE</span>
+        </div>
+    </nav>
+
+    <!-- Уведомления -->
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle" style="color: var(--success);"></i>
+        <div id="notificationText">Уведомление</div>
+    </div>
+
+    <script>
+        // Инициализация игры
+        document.addEventListener('DOMContentLoaded', function() {
+            // Основные переменные игры
+            const gameState = {
+                foodCoins: 1000,
+                gems: 50,
+                tickets: 5,
+                level: 1,
+                xp: 0,
+                xpToNextLevel: 50,
+                clicks: 0,
+                multiplier: 1,
+                autoClicker: 0,
+                boostEndTime: 0,
+                currentFoodSkin: 'default',
+                currentAura: 'none',
+                currentTheme: 'default',
+                unlockedAchievements: [],
+                ownedCosmetics: ['default-food', 'none-aura', 'default-theme'],
+                equippedCosmetics: {
+                    food: 'default',
+                    aura: 'none',
+                    theme: 'default'
+                },
+                upgrades: {
+                    speedBooster: { level: 0, maxLevel: 10, price: 100 },
+                    multiplier: { level: 0, maxLevel: 5, price: 500 },
+                    autoClicker: { level: 0, maxLevel: 10, price: 300 },
+                    foodProcessor: { level: 0, maxLevel: 5, price: 800 },
+                    megaFryer: { level: 0, maxLevel: 5, price: 1200 },
+                    chefsHands: { level: 0, maxLevel: 5, price: 1500 },
+                    sauceOverflow: { level: 0, maxLevel: 3, price: 2000 },
+                    grillMasterMode: { level: 0, maxLevel: 3, price: 3000 },
+                    goldenPan: { level: 0, maxLevel: 5, price: 2500 },
+                    flavorBooster: { level: 0, maxLevel: 3, price: 5000 }
+                },
+                achievements: [
+                    { id: 'first-click', name: 'Крошка-таппер', description: 'Сделать первый клик', unlocked: false },
+                    { id: '100-clicks', name: 'Начинающий повар', description: 'Сделать 100 кликов', unlocked: false },
+                    { id: '500-clicks', name: 'Гриль-мастер', description: 'Сделать 500 кликов', unlocked: false },
+                    { id: 'level-5', name: 'Сладкоежка', description: 'Достичь 5 уровня', unlocked: false },
+                    { id: 'level-10', name: 'Король Пиццы', description: 'Достичь 10 уровня', unlocked: false },
+                    { id: 'level-20', name: 'Бургерный Легенд', description: 'Достичь 20 уровня', unlocked: false },
+                    { id: '1000-coins', name: 'Богатый повар', description: 'Заработать 1000 Food Coins', unlocked: false },
+                    { id: 'first-upgrade', name: 'Улучшатель', description: 'Купить первое улучшение', unlocked: false },
+                    { id: 'all-upgrades', name: 'Верховный шеф', description: 'Купить все улучшения', unlocked: false }
+                ],
+                foodSkins: [
+                    { id: 'default', name: 'Классический бургер', icon: 'fa-hamburger', rarity: 'common', price: 0, owned: true, equipped: true },
+                    { id: 'golden', name: 'Золотой бургер', icon: 'fa-hamburger', rarity: 'legendary', price: 1000, owned: false, equipped: false },
+                    { id: 'rainbow', name: 'Радужная пицца', icon: 'fa-pizza-slice', rarity: 'epic', price: 500, owned: false, equipped: false },
+                    { id: 'neon', name: 'Неоновые суши', icon: 'fa-fish', rarity: 'epic', price: 600, owned: false, equipped: false },
+                    { id: 'dark', name: 'Темный пончик', icon: 'fa-donut', rarity: 'rare', price: 300, owned: false, equipped: false },
+                    { id: 'galaxy', name: 'Галактическое мороженое', icon: 'fa-ice-cream', rarity: 'legendary', price: 1500, owned: false, equipped: false }
+                ],
+                auras: [
+                    { id: 'none', name: 'Без ауры', color: 'transparent', rarity: 'common', price: 0, owned: true, equipped: true },
+                    { id: 'blue', name: 'Синяя неон', color: '#4ECDC4', rarity: 'rare', price: 200, owned: false, equipped: false },
+                    { id: 'magenta', name: 'Маджента шок', color: '#FF6B9D', rarity: 'rare', price: 200, owned: false, equipped: false },
+                    { id: 'citrus', name: 'Цитрусовый пульс', color: '#FFD166', rarity: 'epic', price: 400, owned: false, equipped: false },
+                    { id: 'apple', name: 'Яблочное свечение', color: '#06D6A0', rarity: 'rare', price: 200, owned: false, equipped: false },
+                    { id: 'galaxy', name: 'Искры галактики', color: '#9D4EDD', rarity: 'legendary', price: 1000, owned: false, equipped: false },
+                    { id: 'bbq', name: 'Аура BBQ пламени', color: '#FF6B6B', rarity: 'epic', price: 500, owned: false, equipped: false }
+                ],
+                themes: [
+                    { id: 'default', name: 'Стандартная', rarity: 'common', price: 0, owned: true, equipped: true },
+                    { id: 'dark-kitchen', name: 'Темная кухня', rarity: 'rare', price: 300, owned: false, equipped: false },
+                    { id: 'milk-white', name: 'Молочный белый', rarity: 'rare', price: 300, owned: false, equipped: false },
+                    { id: 'cheese-gold', name: 'Сырное золото', rarity: 'epic', price: 500, owned: false, equipped: false },
+                    { id: 'neon-night', name: 'Неоновая ночь', rarity: 'epic', price: 600, owned: false, equipped: false },
+                    { id: 'candy-pink', name: 'Конфетно-розовый', rarity: 'rare', price: 400, owned: false, equipped: false },
+                    { id: 'lava-grill', name: 'Лавовый гриль', rarity: 'legendary', price: 1000, owned: false, equipped: false },
+                    { id: 'frosted-ice', name: 'Ледяная глазурь', rarity: 'epic', price: 500, owned: false, equipped: false }
+                ],
+                promoCodes: {
+                    'WELCOME': { coins: 500, gems: 10, used: false },
+                    'FOODIE': { coins: 300, gems: 5, used: false },
+                    'CLICKMASTER': { coins: 1000, gems: 20, used: false },
+                    'NEOMORPH': { coins: 200, gems: 5, used: false },
+                    'GLASSMORPH': { coins: 200, gems: 5, used: false },
+                    'ULTRAFOOD': { coins: 1500, gems: 30, used: false }
+                }
+            };
+
+            // DOM элементы
+            const elements = {
+                foodCoins: document.getElementById('foodCoins'),
+                gems: document.getElementById('gems'),
+                tickets: document.getElementById('tickets'),
+                level: document.getElementById('level'),
+                xp: document.getElementById('xp'),
+                clicks: document.getElementById('clicks'),
+                multiplier: document.getElementById('multiplier'),
+                xpFill: document.getElementById('xpFill'),
+                currentXp: document.getElementById('currentXp'),
+                xpNeeded: document.getElementById('xpNeeded'),
+                mainFood: document.getElementById('mainFood'),
+                foodIcon: document.getElementById('foodIcon'),
+                foodAura: document.getElementById('foodAura'),
+                particlesContainer: document.getElementById('particlesContainer'),
+                boostIndicator: document.getElementById('boostIndicator'),
+                boostText: document.getElementById('boostText'),
+                upgradesContainer: document.getElementById('upgradesContainer'),
+                foodSkinsContainer: document.getElementById('foodSkinsContainer'),
+                aurasContainer: document.getElementById('aurasContainer'),
+                themesContainer: document.getElementById('themesContainer'),
+                achievementsContainer: document.getElementById('achievementsContainer'),
+                profileLevel: document.getElementById('profileLevel'),
+                totalClicks: document.getElementById('totalClicks'),
+                totalXp: document.getElementById('totalXp'),
+                profileTickets: document.getElementById('profileTickets'),
+                winChance: document.getElementById('winChance'),
+                lotteryBtn: document.getElementById('lotteryBtn'),
+                promoInput: document.getElementById('promoInput'),
+                promoBtn: document.getElementById('promoBtn'),
+                promoMessage: document.getElementById('promoMessage'),
+                notification: document.getElementById('notification'),
+                notificationText: document.getElementById('notificationText')
+            };
+
+            // Система вкладок
+            const navItems = document.querySelectorAll('.nav-item');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            navItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const tabId = item.getAttribute('data-tab');
+                    
+                    // Обновляем активную вкладку
+                    navItems.forEach(nav => nav.classList.remove('active'));
+                    item.classList.add('active');
+                    
+                    // Показываем соответствующий контент
+                    tabContents.forEach(tab => tab.classList.remove('active'));
+                    document.getElementById(tabId).classList.add('active');
+                    
+                    // Обновляем данные на вкладках
+                    if (tabId === 'profile-tab') {
+                        updateProfileTab();
+                    }
+                });
+            });
+
+            // Система категорий в магазине
+            const categoryBtns = document.querySelectorAll('.category-btn');
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    categoryBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    const category = btn.getAttribute('data-category');
+                    renderUpgrades(category);
+                });
+            });
+
+            // Инициализация
+            initGame();
+            renderUpgrades('gameplay');
+            renderCosmetics();
+            renderAchievements();
+            updateUI();
+
+            // Инициализация игры
+            function initGame() {
+                // Обработчик клика по еде
+                elements.mainFood.addEventListener('click', handleFoodClick);
+                
+                // Автокликер
+                setInterval(autoClick, 1000);
+                
+                // Проверка бустов
+                setInterval(checkBoosts, 1000);
+                
+                // Обновление шанса выигрыша
+                updateWinChance();
+                
+                // Обработчик лотереи
+                elements.lotteryBtn.addEventListener('click', useLotteryTicket);
+                
+                // Обработчик промокода
+                elements.promoBtn.addEventListener('click', activatePromoCode);
+            }
+
+            // Обработчик клика по еде
+            function handleFoodClick() {
+                // Добавляем эффект нажатия
+                elements.mainFood.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    elements.mainFood.style.transform = 'scale(1)';
+                }, 100);
+                
+                // Увеличиваем счетчики
+                gameState.clicks++;
+                let xpGained = 1 * gameState.multiplier;
+                let coinsGained = 1;
+                
+                // Проверка на редкие события
+                const eventChance = Math.random();
+                if (eventChance < 0.01) { // 1% шанс
+                    // Золотая еда
+                    xpGained = 50 * gameState.multiplier;
+                    showNotification('🎉 Золотая еда! +50 XP!', 'success');
+                    createParticles(30, '#FFD700');
+                } else if (eventChance < 0.03) { // 2% шанс
+                    // Острый перец
+                    activateBoost('pepper', 7, 3);
+                    showNotification('🌶️ Острый перец! x3 XP на 7 секунд!', 'warning');
+                    createParticles(20, '#FF4757');
+                } else if (eventChance < 0.06) { // 3% шанс
+                    // Сладкий пир
+                    coinsGained = 10;
+                    showNotification('🍰 Сладкий пир! +10 Food Coins!', 'info');
+                    createParticles(15, '#FF6B9D');
+                } else if (eventChance < 0.08) { // 2% шанс
+                    // Комбо-обед
+                    xpGained = 10 * gameState.multiplier;
+                    coinsGained = 5;
+                    showNotification('🍱 Комбо-обед! Крит + бонусные монеты!', 'success');
+                    createParticles(25, '#4ECDC4');
+                }
+                
+                // Добавляем XP и монеты
+                addXP(xpGained);
+                gameState.foodCoins += coinsGained;
+                
+                // Создаем частицы
+                createParticles(5 + Math.floor(Math.random() * 5), '#FF9A9E');
+                
+                // Обновляем UI
+                updateUI();
+                
+                // Проверяем достижения
+                checkAchievements();
+            }
+
+            // Добавление XP
+            function addXP(amount) {
+                gameState.xp += amount;
+                
+                // Проверка уровня
+                if (gameState.xp >= gameState.xpToNextLevel) {
+                    levelUp();
+                }
+                
+                // Обновляем прогресс-бар
+                const xpPercent = (gameState.xp / gameState.xpToNextLevel) * 100;
+                elements.xpFill.style.width = `${xpPercent}%`;
+                elements.currentXp.textContent = gameState.xp;
+                elements.xpNeeded.textContent = gameState.xpToNextLevel;
+            }
+
+            // Повышение уровня
+            function levelUp() {
+                gameState.level++;
+                gameState.xp -= gameState.xpToNextLevel;
+                gameState.xpToNextLevel = 50 + gameState.level * 10;
+                gameState.tickets++;
+                
+                // Эффекты уровня
+                showNotification(`🎊 Уровень ${gameState.level}! +1 лотерейный билет!`, 'success');
+                createParticles(30, '#FFD166');
+                
+                // Обновляем UI
+                updateUI();
+                
+                // Проверяем достижения
+                checkAchievements();
+            }
+
+            // Активация буста
+            function activateBoost(type, duration, multiplier) {
+                gameState.multiplier *= multiplier;
+                gameState.boostEndTime = Date.now() + duration * 1000;
+                
+                // Обновляем индикатор буста
+                elements.boostIndicator.style.display = 'block';
+                elements.boostText.textContent = `${type === 'pepper' ? '🌶️ x3 XP' : '⚡ Буст'} - ${duration}с`;
+                
+                // Обновляем множитель в UI
+                elements.multiplier.textContent = `x${gameState.multiplier}`;
+            }
+
+            // Проверка активных бустов
+            function checkBoosts() {
+                if (gameState.boostEndTime > 0 && Date.now() > gameState.boostEndTime) {
+                    // Сбрасываем множитель
+                    gameState.multiplier = 1 + gameState.upgrades.multiplier.level;
+                    elements.multiplier.textContent = `x${gameState.multiplier}`;
+                    
+                    // Скрываем индикатор
+                    elements.boostIndicator.style.display = 'none';
+                    gameState.boostEndTime = 0;
+                } else if (gameState.boostEndTime > 0) {
+                    // Обновляем таймер
+                    const timeLeft = Math.ceil((gameState.boostEndTime - Date.now()) / 1000);
+                    elements.boostText.textContent = `🌶️ x3 XP - ${timeLeft}с`;
+                }
+            }
+
+            // Автокликер
+            function autoClick() {
+                if (gameState.autoClicker > 0) {
+                    const autoClicks = gameState.autoClicker;
+                    for (let i = 0; i < autoClicks; i++) {
+                        // Имитируем клики
+                        gameState.clicks++;
+                        let xpGained = 1 * gameState.multiplier;
+                        gameState.foodCoins += 1;
+                        addXP(xpGained);
+                        
+                        // Создаем частицы каждые 5 автокликов
+                        if (i % 5 === 0) {
+                            createParticles(2, '#4ECDC4');
+                        }
+                    }
+                    updateUI();
+                }
+            }
+
+            // Создание частиц
+            function createParticles(count, color) {
+                const container = elements.particlesContainer;
+                
+                for (let i = 0; i < count; i++) {
+                    const particle = document.createElement('div');
+                    particle.classList.add('particle');
+                    
+                    // Случайный размер
+                    const size = Math.random() * 10 + 5;
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    
+                    // Случайная позиция
+                    const foodRect = elements.mainFood.getBoundingClientRect();
+                    const x = foodRect.left + foodRect.width / 2;
+                    const y = foodRect.top + foodRect.height / 2;
+                    
+                    particle.style.left = `${x}px`;
+                    particle.style.top = `${y}px`;
+                    particle.style.backgroundColor = color;
+                    particle.style.borderRadius = '50%';
+                    
+                    // Анимация
+                    const angle = Math.random() * Math.PI * 2;
+                    const speed = Math.random() * 100 + 50;
+                    const vx = Math.cos(angle) * speed;
+                    const vy = Math.sin(angle) * speed;
+                    
+                    container.appendChild(particle);
+                    
+                    // Анимация с requestAnimationFrame
+                    let startTime = null;
+                    const duration = 1000;
+                    
+                    function animateParticle(timestamp) {
+                        if (!startTime) startTime = timestamp;
+                        const elapsed = timestamp - startTime;
+                        const progress = elapsed / duration;
+                        
+                        if (progress < 1) {
+                            const currentX = x + vx * progress;
+                            const currentY = y + vy * progress - (progress * 100); // Эффект гравитации
+                            const currentOpacity = 1 - progress;
+                            
+                            particle.style.left = `${currentX}px`;
+                            particle.style.top = `${currentY}px`;
+                            particle.style.opacity = currentOpacity;
+                            
+                            requestAnimationFrame(animateParticle);
+                        } else {
+                            container.removeChild(particle);
+                        }
+                    }
+                    
+                    requestAnimationFrame(animateParticle);
+                }
+            }
+
+            // Показать уведомление
+            function showNotification(text, type) {
+                elements.notificationText.textContent = text;
+                
+                // Устанавливаем цвет в зависимости от типа
+                let icon = 'fa-check-circle';
+                let color = 'var(--success)';
+                
+                if (type === 'warning') {
+                    icon = 'fa-exclamation-triangle';
+                    color = 'var(--warning)';
+                } else if (type === 'info') {
+                    icon = 'fa-info-circle';
+                    color = 'var(--info)';
+                }
+                
+                elements.notification.querySelector('i').className = `fas ${icon}`;
+                elements.notification.querySelector('i').style.color = color;
+                
+                // Показываем уведомление
+                elements.notification.classList.add('show');
+                
+                // Скрываем через 3 секунды
+                setTimeout(() => {
+                    elements.notification.classList.remove('show');
+                }, 3000);
+            }
+
+            // Обновление UI
+            function updateUI() {
+                // Обновляем валюту
+                elements.foodCoins.textContent = gameState.foodCoins.toLocaleString();
+                elements.gems.textContent = gameState.gems;
+                elements.tickets.textContent = gameState.tickets;
+                
+                // Обновляем игровые показатели
+                elements.level.textContent = gameState.level;
+                elements.xp.textContent = gameState.xp;
+                elements.clicks.textContent = gameState.clicks.toLocaleString();
+                elements.multiplier.textContent = `x${gameState.multiplier}`;
+                
+                // Обновляем прогресс-бар
+                const xpPercent = (gameState.xp / gameState.xpToNextLevel) * 100;
+                elements.xpFill.style.width = `${xpPercent}%`;
+                elements.currentXp.textContent = gameState.xp;
+                elements.xpNeeded.textContent = gameState.xpToNextLevel;
+            }
+
+            // Обновление вкладки профиля
+            function updateProfileTab() {
+                elements.profileLevel.textContent = gameState.level;
+                elements.totalClicks.textContent = gameState.clicks.toLocaleString();
+                elements.totalXp.textContent = gameState.xp.toLocaleString();
+                elements.profileTickets.textContent = gameState.tickets;
+                updateWinChance();
+            }
+
+            // Обновление шанса выигрыша
+            function updateWinChance() {
+                const chance = (gameState.tickets / 1000) * 100;
+                elements.winChance.textContent = `${chance.toFixed(2)}%`;
+            }
+
+            // Рендер улучшений
+            function renderUpgrades(category) {
+                elements.upgradesContainer.innerHTML = '';
+                
+                const upgrades = {
+                    gameplay: [
+                        { id: 'speedBooster', name: 'Ускоритель скорости', icon: 'fa-bolt', description: 'Ускоряет анимации еды и общие эффекты', priceMultiplier: 1.5 },
+                        { id: 'foodProcessor', name: 'Процессор еды', icon: 'fa-cogs', description: 'Увеличивает шанс на редкие фуд-ивенты', priceMultiplier: 2 },
+                        { id: 'megaFryer', name: 'Мега-фритюрница', icon: 'fa-temperature-high', description: 'Увеличивает шанс крита', priceMultiplier: 2.5 },
+                        { id: 'chefsHands', name: 'Руки шефа', icon: 'fa-hand-sparkles', description: 'Уменьшает время отката между ивентами', priceMultiplier: 3 }
+                    ],
+                    autoclicker: [
+                        { id: 'autoClicker', name: 'Автокликер', icon: 'fa-mouse-pointer', description: 'Автоматически кликает за вас', priceMultiplier: 1.2 }
+                    ],
+                    multipliers: [
+                        { id: 'multiplier', name: 'Множитель XP', icon: 'fa-times', description: 'Увеличивает получаемый XP', priceMultiplier: 2 },
+                        { id: 'sauceOverflow', name: 'Переполнение соуса', icon: 'fa-fill-drip', description: 'При критах: +Food Coins', priceMultiplier: 2.5 },
+                        { id: 'flavorBooster', name: 'Усилитель вкуса', icon: 'fa-star', description: 'Мультипликатор всего (редко и дорого)', priceMultiplier: 5 }
+                    ],
+                    special: [
+                        { id: 'grillMasterMode', name: 'Режим гриль-мастера', icon: 'fa-fire', description: 'Временный усиленный режим', priceMultiplier: 3 },
+                        { id: 'goldenPan', name: 'Золотая сковорода', icon: 'fa-utensils', description: 'Увеличивает шанс золотой еды', priceMultiplier: 3.5 }
+                    ]
+                };
+                
+                const categoryUpgrades = upgrades[category] || [];
+                
+                categoryUpgrades.forEach(upgradeData => {
+                    const upgrade = gameState.upgrades[upgradeData.id];
+                    const price = Math.floor(upgradeData.priceMultiplier * upgrade.price * (upgrade.level + 1));
+                    const canAfford = gameState.foodCoins >= price;
+                    const maxLevel = upgrade.level >= upgrade.maxLevel;
+                    
+                    const upgradeCard = document.createElement('div');
+                    upgradeCard.className = 'upgrade-card glass';
+                    upgradeCard.innerHTML = `
+                        <div class="upgrade-header">
+                            <div class="upgrade-icon">
+                                <i class="fas ${upgradeData.icon}"></i>
+                            </div>
+                            <div>
+                                <div class="upgrade-title">${upgradeData.name}</div>
+                                <div class="upgrade-level">Уровень ${upgrade.level}/${upgrade.maxLevel}</div>
+                            </div>
+                        </div>
+                        <div class="upgrade-description">${upgradeData.description}</div>
+                        <div class="upgrade-footer">
+                            <div class="upgrade-price">
+                                <i class="fas fa-coins"></i> ${price.toLocaleString()}
+                            </div>
+                            <button class="btn ${canAfford && !maxLevel ? 'btn-primary' : 'btn-secondary'}" 
+                                    ${maxLevel ? 'disabled' : ''} 
+                                    data-upgrade="${upgradeData.id}" 
+                                    data-price="${price}">
+                                ${maxLevel ? 'Макс. уровень' : 'Купить'}
+                            </button>
+                        </div>
+                    `;
+                    
+                    elements.upgradesContainer.appendChild(upgradeCard);
+                });
+                
+                // Добавляем обработчики для кнопок покупки
+                document.querySelectorAll('[data-upgrade]').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const upgradeId = this.getAttribute('data-upgrade');
+                        const price = parseInt(this.getAttribute('data-price'));
+                        
+                        if (gameState.foodCoins >= price) {
+                            buyUpgrade(upgradeId, price);
+                        } else {
+                            showNotification('Недостаточно Food Coins!', 'warning');
+                        }
+                    });
+                });
+            }
+
+            // Покупка улучшения
+            function buyUpgrade(upgradeId, price) {
+                const upgrade = gameState.upgrades[upgradeId];
+                
+                if (upgrade.level >= upgrade.maxLevel) {
+                    showNotification('Достигнут максимальный уровень!', 'warning');
+                    return;
+                }
+                
+                if (gameState.foodCoins >= price) {
+                    gameState.foodCoins -= price;
+                    upgrade.level++;
+                    upgrade.price = Math.floor(upgrade.price * 1.5);
+                    
+                    // Применяем эффект улучшения
+                    applyUpgradeEffect(upgradeId);
+                    
+                    // Показываем уведомление
+                    showNotification(`Улучшение куплено! Уровень ${upgrade.level}`, 'success');
+                    
+                    // Обновляем UI
+                    updateUI();
+                    
+                    // Перерисовываем улучшения
+                    const activeCategory = document.querySelector('.category-btn.active').getAttribute('data-category');
+                    renderUpgrades(activeCategory);
+                    
+                    // Проверяем достижения
+                    checkAchievements();
+                }
+            }
+
+            // Применение эффекта улучшения
+            function applyUpgradeEffect(upgradeId) {
+                switch (upgradeId) {
+                    case 'multiplier':
+                        gameState.multiplier = 1 + gameState.upgrades.multiplier.level;
+                        elements.multiplier.textContent = `x${gameState.multiplier}`;
+                        break;
+                    case 'autoClicker':
+                        gameState.autoClicker = gameState.upgrades.autoClicker.level;
+                        break;
+                    default:
+                        // Другие улучшения не требуют немедленного применения
+                        break;
+                }
+            }
+
+            // Рендер косметики
+            function renderCosmetics() {
+                // Скины еды
+                elements.foodSkinsContainer.innerHTML = '';
+                gameState.foodSkins.forEach(skin => {
+                    const skinCard = createCosmeticCard(skin, 'food');
+                    elements.foodSkinsContainer.appendChild(skinCard);
+                });
+                
+                // Ауры
+                elements.aurasContainer.innerHTML = '';
+                gameState.auras.forEach(aura => {
+                    const auraCard = createCosmeticCard(aura, 'aura');
+                    elements.aurasContainer.appendChild(auraCard);
+                });
+                
+                // Темы
+                elements.themesContainer.innerHTML = '';
+                gameState.themes.forEach(theme => {
+                    const themeCard = createCosmeticCard(theme, 'theme');
+                    elements.themesContainer.appendChild(themeCard);
+                });
+            }
+
+            // Создание карточки косметики
+            function createCosmeticCard(item, type) {
+                const owned = item.owned || gameState.ownedCosmetics.includes(`${item.id}-${type}`);
+                const equipped = item.equipped || 
+                    (type === 'food' && gameState.equippedCosmetics.food === item.id) ||
+                    (type === 'aura' && gameState.equippedCosmetics.aura === item.id) ||
+                    (type === 'theme' && gameState.equippedCosmetics.theme === item.id);
+                
+                const card = document.createElement('div');
+                card.className = `cosmetic-card ${owned ? 'owned' : 'locked'} ${equipped ? 'equipped' : ''}`;
+                card.setAttribute('data-type', type);
+                card.setAttribute('data-id', item.id);
+                
+                // Определяем иконку и цвет для типа
+                let icon = item.icon || 'fa-question';
+                let bgColor = item.color || '#FF6B6B';
+                
+                if (type === 'food') {
+                    icon = item.icon || 'fa-hamburger';
+                    bgColor = '#FF9A9E';
+                } else if (type === 'theme') {
+                    icon = 'fa-palette';
+                    bgColor = '#4ECDC4';
+                }
+                
+                card.innerHTML = `
+                    <div class="cosmetic-image" style="background: linear-gradient(135deg, ${bgColor}, ${type === 'aura' ? bgColor + '80' : '#FAD0C4'});">
+                        <i class="fas ${icon}"></i>
+                    </div>
+                    <div class="cosmetic-rarity rarity-${item.rarity}">${item.rarity}</div>
+                    <div class="cosmetic-name">${item.name}</div>
+                    ${!owned ? 
+                        `<div class="cosmetic-price">
+                            <i class="fas fa-coins"></i> ${item.price}
+                        </div>` : 
+                        `<div class="cosmetic-price">
+                            ${equipped ? '<i class="fas fa-check"></i> Надето' : '<i class="fas fa-box"></i> В инвентаре'}
+                        </div>`
+                    }
+                    ${!owned ? 
+                        `<button class="btn btn-primary full-width mt-10 buy-btn" data-price="${item.price}">Купить</button>` : 
+                        (!equipped ? `<button class="btn btn-secondary full-width mt-10 equip-btn">Надеть</button>` : '')
+                    }
+                `;
+                
+                // Добавляем обработчики событий
+                if (!owned) {
+                    const buyBtn = card.querySelector('.buy-btn');
+                    buyBtn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        buyCosmetic(item, type, item.price);
+                    });
+                } else if (!equipped) {
+                    const equipBtn = card.querySelector('.equip-btn');
+                    equipBtn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        equipCosmetic(item, type);
+                    });
+                }
+                
+                return card;
+            }
+
+            // Покупка косметики
+            function buyCosmetic(item, type, price) {
+                if (gameState.foodCoins >= price) {
+                    gameState.foodCoins -= price;
+                    item.owned = true;
+                    
+                    // Добавляем в список ownedCosmetics
+                    const cosmeticId = `${item.id}-${type}`;
+                    if (!gameState.ownedCosmetics.includes(cosmeticId)) {
+                        gameState.ownedCosmetics.push(cosmeticId);
+                    }
+                    
+                    showNotification(`Косметика "${item.name}" куплена!`, 'success');
+                    
+                    // Обновляем UI
+                    updateUI();
+                    renderCosmetics();
+                } else {
+                    showNotification('Недостаточно Food Coins!', 'warning');
+                }
+            }
+
+            // Надевание косметики
+            function equipCosmetic(item, type) {
+                // Снимаем предыдущую косметику этого типа
+                if (type === 'food') {
+                    gameState.equippedCosmetics.food = item.id;
+                    gameState.currentFoodSkin = item.id;
+                    elements.foodIcon.className = `fas ${item.icon} food-icon`;
+                } else if (type === 'aura') {
+                    gameState.equippedCosmetics.aura = item.id;
+                    gameState.currentAura = item.id;
+                    elements.foodAura.style.background = `radial-gradient(circle, ${item.color}80 0%, transparent 70%)`;
+                } else if (type === 'theme') {
+                    gameState.equippedCosmetics.theme = item.id;
+                    gameState.currentTheme = item.id;
+                    
+                    // Применяем тему
+                    document.body.className = '';
+                    if (item.id !== 'default') {
+                        document.body.classList.add(`theme-${item.id}`);
+                    }
+                }
+                
+                // Обновляем статус косметики
+                if (type === 'food') {
+                    gameState.foodSkins.forEach(skin => {
+                        skin.equipped = skin.id === item.id;
+                    });
+                } else if (type === 'aura') {
+                    gameState.auras.forEach(aura => {
+                        aura.equipped = aura.id === item.id;
+                    });
+                } else if (type === 'theme') {
+                    gameState.themes.forEach(theme => {
+                        theme.equipped = theme.id === item.id;
+                    });
+                }
+                
+                showNotification(`Косметика "${item.name}" надета!`, 'success');
+                
+                // Обновляем рендер косметики
+                renderCosmetics();
+            }
+
+            // Рендер достижений
+            function renderAchievements() {
+                elements.achievementsContainer.innerHTML = '';
+                
+                gameState.achievements.forEach(achievement => {
+                    const achievementCard = document.createElement('div');
+                    achievementCard.className = 'achievement-card glass';
+                    achievementCard.innerHTML = `
+                        <div class="achievement-icon">
+                            <i class="fas ${achievement.unlocked ? 'fa-trophy' : 'fa-lock'}"></i>
+                        </div>
+                        <div class="achievement-info">
+                            <div class="achievement-name">${achievement.name}</div>
+                            <div class="achievement-desc">${achievement.description}</div>
+                            <div class="achievement-status">${achievement.unlocked ? 'Разблокировано' : 'Заблокировано'}</div>
+                        </div>
+                    `;
+                    
+                    elements.achievementsContainer.appendChild(achievementCard);
+                });
+            }
+
+            // Проверка достижений
+            function checkAchievements() {
+                let newAchievements = false;
+                
+                // Проверяем каждое достижение
+                gameState.achievements.forEach(achievement => {
+                    if (!achievement.unlocked) {
+                        let unlocked = false;
+                        
+                        switch (achievement.id) {
+                            case 'first-click':
+                                unlocked = gameState.clicks >= 1;
+                                break;
+                            case '100-clicks':
+                                unlocked = gameState.clicks >= 100;
+                                break;
+                            case '500-clicks':
+                                unlocked = gameState.clicks >= 500;
+                                break;
+                            case 'level-5':
+                                unlocked = gameState.level >= 5;
+                                break;
+                            case 'level-10':
+                                unlocked = gameState.level >= 10;
+                                break;
+                            case 'level-20':
+                                unlocked = gameState.level >= 20;
+                                break;
+                            case '1000-coins':
+                                unlocked = gameState.foodCoins >= 1000;
+                                break;
+                            case 'first-upgrade':
+                                // Проверяем, куплено ли хоть одно улучшение
+                                const hasUpgrade = Object.values(gameState.upgrades).some(upgrade => upgrade.level > 0);
+                                unlocked = hasUpgrade;
+                                break;
+                            case 'all-upgrades':
+                                // Проверяем, все ли улучшения на максимальном уровне
+                                const allMaxLevel = Object.values(gameState.upgrades).every(upgrade => upgrade.level >= upgrade.maxLevel);
+                                unlocked = allMaxLevel;
+                                break;
+                        }
+                        
+                        if (unlocked) {
+                            achievement.unlocked = true;
+                            if (!gameState.unlockedAchievements.includes(achievement.id)) {
+                                gameState.unlockedAchievements.push(achievement.id);
+                                newAchievements = true;
+                                
+                                // Показываем уведомление
+                                showNotification(`Достижение разблокировано: ${achievement.name}!`, 'success');
+                            }
+                        }
+                    }
+                });
+                
+                // Если есть новые достижения, обновляем список
+                if (newAchievements) {
+                    renderAchievements();
+                }
+            }
+
+            // Использование лотерейного билета
+            function useLotteryTicket() {
+                if (gameState.tickets <= 0) {
+                    showNotification('У вас нет билетов!', 'warning');
+                    return;
+                }
+                
+                gameState.tickets--;
+                updateUI();
+                updateProfileTab();
+                
+                // Расчет шанса выигрыша
+                const winChance = (gameState.tickets / 1000) * 100;
+                const random = Math.random() * 100;
+                
+                if (random < winChance) {
+                    // Выигрыш
+                    const prizes = [
+                        { name: '1000 Gems', reward: () => { gameState.gems += 1000; } },
+                        { name: 'Legendary Skin', reward: () => { 
+                            // Добавляем случайный легендарный скин
+                            const legendarySkins = gameState.foodSkins.filter(skin => skin.rarity === 'legendary' && !skin.owned);
+                            if (legendarySkins.length > 0) {
+                                const skin = legendarySkins[Math.floor(Math.random() * legendarySkins.length)];
+                                skin.owned = true;
+                                gameState.ownedCosmetics.push(`${skin.id}-food`);
+                            }
+                        }},
+                        { name: 'Эксклюзивная еда', reward: () => { 
+                            // Добавляем случайную эксклюзивную еду
+                            const foodSkins = gameState.foodSkins.filter(skin => !skin.owned && skin.id !== 'default');
+                            if (foodSkins.length > 0) {
+                                const skin = foodSkins[Math.floor(Math.random() * foodSkins.length)];
+                                skin.owned = true;
+                                gameState.ownedCosmetics.push(`${skin.id}-food`);
+                            }
+                        }},
+                        { name: 'Буст x10 на 1 час', reward: () => { 
+                            activateBoost('lottery', 3600, 10);
+                        }}
+                    ];
+                    
+                    const prize = prizes[Math.floor(Math.random() * prizes.length)];
+                    prize.reward();
+                    
+                    showNotification(`🎊 Поздравляем! Вы выиграли: ${prize.name}!`, 'success');
+                } else {
+                    showNotification('К сожалению, вы не выиграли. Попробуйте еще раз!', 'info');
+                }
+            }
+
+            // Активация промокода
+            function activatePromoCode() {
+                const code = elements.promoInput.value.trim().toUpperCase();
+                
+                if (!code) {
+                    showNotification('Введите промокод!', 'warning');
+                    return;
+                }
+                
+                const promo = gameState.promoCodes[code];
+                
+                if (!promo) {
+                    elements.promoMessage.innerHTML = '<span style="color: var(--danger);">Неверный промокод!</span>';
+                    return;
+                }
+                
+                if (promo.used) {
+                    elements.promoMessage.innerHTML = '<span style="color: var(--warning);">Промокод уже использован!</span>';
+                    return;
+                }
+                
+                // Применяем награду
+                if (promo.coins) {
+                    gameState.foodCoins += promo.coins;
+                }
+                
+                if (promo.gems) {
+                    gameState.gems += promo.gems;
+                }
+                
+                promo.used = true;
+                
+                // Показываем сообщение
+                elements.promoMessage.innerHTML = `
+                    <span style="color: var(--success);">
+                        Промокод активирован! +${promo.coins} Food Coins, +${promo.gems} Gems!
+                    </span>
+                `;
+                
+                // Очищаем поле ввода
+                elements.promoInput.value = '';
+                
+                // Обновляем UI
+                updateUI();
+                
+                // Показываем уведомление
+                showNotification(`Промокод "${code}" активирован!`, 'success');
+            }
+
+            // Инициализация темы
+            function initTheme() {
+                // Применяем сохраненную тему или тему по умолчанию
+                const savedTheme = localStorage.getItem('foodClickerTheme') || 'default';
+                if (savedTheme !== 'default') {
+                    document.body.classList.add(`theme-${savedTheme}`);
+                    gameState.currentTheme = savedTheme;
+                    
+                    // Обновляем состояние темы в данных
+                    gameState.themes.forEach(theme => {
+                        theme.equipped = theme.id === savedTheme;
+                    });
+                }
+            }
+
+            // Сохранение игры
+            function saveGame() {
+                const gameData = {
+                    foodCoins: gameState.foodCoins,
+                    gems: gameState.gems,
+                    tickets: gameState.tickets,
+                    level: gameState.level,
+                    xp: gameState.xp,
+                    xpToNextLevel: gameState.xpToNextLevel,
+                    clicks: gameState.clicks,
+                    multiplier: gameState.multiplier,
+                    autoClicker: gameState.autoClicker,
+                    upgrades: gameState.upgrades,
+                    unlockedAchievements: gameState.unlockedAchievements,
+                    ownedCosmetics: gameState.ownedCosmetics,
+                    equippedCosmetics: gameState.equippedCosmetics,
+                    currentTheme: gameState.currentTheme,
+                    promoCodes: gameState.promoCodes
+                };
+                
+                localStorage.setItem('foodClickerSave', JSON.stringify(gameData));
+            }
+
+            // Загрузка игры
+            function loadGame() {
+                const savedData = localStorage.getItem('foodClickerSave');
+                
+                if (savedData) {
+                    try {
+                        const data = JSON.parse(savedData);
+                        
+                        // Загружаем данные
+                        Object.assign(gameState, data);
+                        
+                        // Обновляем состояние косметики на основе ownedCosmetics
+                        updateCosmeticsFromSave();
+                        
+                        // Применяем сохраненную тему
+                        initTheme();
+                        
+                        // Применяем сохраненные улучшения
+                        Object.keys(gameState.upgrades).forEach(upgradeId => {
+                            applyUpgradeEffect(upgradeId);
+                        });
+                        
+                        console.log('Игра загружена!');
+                    } catch (e) {
+                        console.error('Ошибка загрузки игры:', e);
+                    }
+                }
+            }
+
+            // Обновление состояния косметики из сохранения
+            function updateCosmeticsFromSave() {
+                // Обновляем скины еды
+                gameState.foodSkins.forEach(skin => {
+                    skin.owned = gameState.ownedCosmetics.includes(`${skin.id}-food`);
+                    skin.equipped = gameState.equippedCosmetics.food === skin.id;
+                });
+                
+                // Обновляем ауры
+                gameState.auras.forEach(aura => {
+                    aura.owned = gameState.ownedCosmetics.includes(`${aura.id}-aura`);
+                    aura.equipped = gameState.equippedCosmetics.aura === aura.id;
+                });
+                
+                // Обновляем темы
+                gameState.themes.forEach(theme => {
+                    theme.owned = gameState.ownedCosmetics.includes(`${theme.id}-theme`);
+                    theme.equipped = gameState.equippedCosmetics.theme === theme.id;
+                });
+            }
+
+            // Автосохранение
+            setInterval(saveGame, 30000); // Сохраняем каждые 30 секунд
+            
+            // Загружаем игру при старте
+            loadGame();
+            
+            // Инициализируем тему
+            initTheme();
+        });
+    </script>
+</body>
+</html>
